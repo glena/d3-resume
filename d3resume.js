@@ -28,7 +28,7 @@ var d3Resume = function(_config){
 			.ticks(30)
 			.tickFormat(d3.time.format("%Y-%m"));
 
-		d3.json('/data/resume.json', loadData)
+		d3.json(config.dataUrl, loadData)
     }
 
     var loadData = function(error, data){
