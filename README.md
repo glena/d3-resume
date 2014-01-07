@@ -23,7 +23,6 @@ and then the resume.js
 and finally, instanciate the graph:
 
 ```
-
 var resume = new d3Resume({
   width: 900,
   height: 900,
