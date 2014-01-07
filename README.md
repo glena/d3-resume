@@ -23,15 +23,10 @@ and then the resume.js
 and finally, instanciate the graph:
 
 ```
-var width = $(document).width() * 0.95;
-var height = $(document).height() * 0.95;
-
-if (width < 900) width = 900;
-if (height < 600) height = 600;
 
 var resume = new d3Resume({
-  width: width,
-  height: height,
+  width: 900,
+  height: 900,
   wrapperSelector: "article.resume",
   dataUrl: 'data.json'
 });
