@@ -80,3 +80,4 @@ Format:
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/glena/d3-resume/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
+[![Analytics](https://ga-beacon.appspot.com/UA-32429094-1/glena/d3-resume)](https://github.com/glena/d3-resume)
