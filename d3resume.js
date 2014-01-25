@@ -135,6 +135,10 @@ var d3Resume = function(_config){
 	{
 		data.forEach(function(d) {
 			d.diameter = x(d.pto)-x(d.from);
+			if (d.to == null)
+			{
+				d.diameter = d.diameter * 2;
+			}
 		});
 		data.sort(function(a,b){
 			return b.diameter - a.diameter;
