@@ -45,7 +45,8 @@ Format:
 			"title":"The job title!",
 			"from":"2006-05-01",
 			"to":"2006-09-30",
-			"description":"all what i have done \n and this is a second line"
+			"description":"all what i have done \n and this is a second line",
+			"default_item":false
 		},
 		{
 			"type":"Trainee",
@@ -53,7 +54,8 @@ Format:
 			"title":"The jon title!",
 			"from":"2006-05-01",
 			"to":null, /* because this is my current job, it doesn't have an end date */
-			"description":"all what i have done \n and this is a second line"
+			"description":"all what i have done \n and this is a second line",
+			"default_item":true
 		}
 	],
 	"study":[
@@ -63,7 +65,8 @@ Format:
 			"title":"My title",
 			"from":"2007-03-01",
 			"to":"2011-12-20",
-			"description":""
+			"description":"",
+			"default_item":false
 		},
 		{
 			"type":"Study",
@@ -71,12 +74,18 @@ Format:
 			"title":"IDK",
 			"from":"2013-08-30",
 			"to":null,
-			"description":""
+			"description":"",
+			"default_item":false
 		}
 	]
 }
 ```
 
+Notes:
+type: is the text shown on the first line.
+to: if this attribute is null, it will count as an ongoing job/study and will be shown as an unfinished one.
+description: when a "\n" is found will generate a new line (because SVG does not support text wrapping at the moment).
+default_item: if this attribute is null, it will be the default text when there is no item selected.
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/glena/d3-resume/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 

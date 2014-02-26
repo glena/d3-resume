@@ -1,3 +1,4 @@
+/*! D3-resume v1.2.0 https://github.com/glena/d3-resume | Germán lena https://github.com/glena/ */
 var d3Resume = function(_config){
 
 	var lastTimeout = null;
@@ -74,19 +75,19 @@ var d3Resume = function(_config){
 
 		graphContainer.append('text')
 				.style("fill", "white")
-				.classed('label',true)
-				.attr("font-size","18px")
+				.classed('axis-label',true)
+				.attr("font-size","17px")
 				.text('WORKS')
 				.style("text-anchor", "center")
-				.attr("transform", "translate("+[15,- 55]+") rotate(-90)");
+				.attr("transform", "translate("+[25,- 55]+") rotate(-90)");
 
 		graphContainer.append('text')
 				.style("fill", "white")
-				.classed('label',true)
-				.attr("font-size","18px")
+				.classed('axis-label',true)
+				.attr("font-size","17px")
 				.text('STUDIES')
 				.style("text-anchor", "center")
-				.attr("transform", "translate("+[15,130]+") rotate(-90)");
+				.attr("transform", "translate("+[25,130]+") rotate(-90)");
 
 		loadItems(svg, graphContainer, data.experience, "experience", -1, config.height / 8);
 		loadItems(svg, graphContainer, data.study, "study", 1, config.height / 8);
@@ -165,9 +166,12 @@ var d3Resume = function(_config){
 				.append('g')
 				.attr('class',function(d){ return className + d.id })
 				.classed('info',true)
+				.classed('default',function(d){return d.default_item;})
 				.classed(className,true)
 				.attr("transform", "translate("+[config.width*0.1,infoTopPosition]+")")
-				.attr("fill-opacity", 0);
+				.attr("fill-opacity", function(d){
+					return d.default_item ? 1 : 0
+				});
 
 		addItemDetail(gInfo, "18px", "translate("+[0,0]+")", "normal", function(d){return d.type;});
 		addItemDetail(gInfo, "18px", "translate("+[0,25]+")", "normal", function(d){return d.title;});
@@ -235,6 +239,7 @@ var d3Resume = function(_config){
 	var hideInfo = function ()
 	{
 		svg.selectAll("g.info").transition().attr("fill-opacity", 0);
+		svg.selectAll("g.info.default").transition().attr("fill-opacity", 1);
 	}
 
 	var showInfo = function (svg, className, d)
@@ -244,7 +249,7 @@ var d3Resume = function(_config){
 			clearTimeout(lastTimeout);
 			lastTimeout = null;
 		}
-		hideInfo();
+		svg.selectAll("g.info").transition().attr("fill-opacity", 0);
 	    svg.selectAll("g.info."+className+"."+className+d.id).transition().attr("fill-opacity", 1);
 	}
 
