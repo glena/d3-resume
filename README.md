@@ -87,6 +87,4 @@ to: if this attribute is null, it will count as an ongoing job/study and will be
 description: when a "\n" is found will generate a new line (because SVG does not support text wrapping at the moment).
 default_item: if this attribute is null, it will be the default text when there is no item selected.
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/glena/d3-resume/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
-[![Analytics](https://ga-beacon.appspot.com/UA-32429094-1/glena/d3-resume)](https://github.com/glena/d3-resume)
+[![Analytics](https://ga-beacon.appspot.com/UA-51467836-1/glena/d3-resume)](https://germanlena.com.ar)
