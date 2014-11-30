@@ -1,4 +1,4 @@
-/*! D3-resume v1.2.0 https://github.com/glena/d3-resume | Germán lena https://github.com/glena/ */
+/*! D3-resume v1.3.0 https://github.com/glena/d3-resume | Germán lena https://github.com/glena/ */
 var d3Resume = function(_config){
 
 	var lastTimeout = null;
@@ -11,8 +11,8 @@ var d3Resume = function(_config){
 	var y = null;
 	var xAxis = null;
 
-    var init = function()
-    {
+  var init = function()
+  {
 		svg = d3
 		.select(config.wrapperSelector)
 		.append('svg')
@@ -30,9 +30,9 @@ var d3Resume = function(_config){
 			.tickFormat(d3.time.format("%Y-%m"));
 
 		d3.json(config.dataUrl, loadData)
-    }
+  }
 
-    var loadData = function(error, data){
+  var loadData = function(error, data){
 
 		normalize(data.experience);
 		normalize(data.study);
@@ -56,41 +56,30 @@ var d3Resume = function(_config){
 			.append("g")
 			.attr("class", "graph-container")
 			.attr("transform", "translate(" + [0,config.height - 200] + ")");;
-		
+
 		var xAxilsEl = graphContainer.append("g")
 				.attr("class", "x axis")
 				.attr("transform", "translate(0," + 0 + ")")
 				.call(xAxis);
 
-		xAxilsEl.selectAll("path")
-				.attr("fill", "none")
-				.attr("fill-opacity","1")
-				.attr("stroke","#FFFFFF")
-				.attr("stroke-width","1px");
-		
 		xAxilsEl.selectAll("text")
 				.style("text-anchor", "end")
-				.style("fill", "white")
 				.attr("transform", "rotate(-60)");
 
 		graphContainer.append('text')
-				.style("fill", "white")
 				.classed('axis-label',true)
-				.attr("font-size","17px")
 				.text('WORKS')
 				.style("text-anchor", "center")
 				.attr("transform", "translate("+[25,- 55]+") rotate(-90)");
 
 		graphContainer.append('text')
-				.style("fill", "white")
 				.classed('axis-label',true)
-				.attr("font-size","17px")
 				.text('STUDIES')
 				.style("text-anchor", "center")
 				.attr("transform", "translate("+[25,130]+") rotate(-90)");
 
-		loadItems(svg, graphContainer, data.experience, "experience", -1, config.height / 8);
-		loadItems(svg, graphContainer, data.study, "study", 1, config.height / 8);
+		loadItems(svg, graphContainer, data.experience, "experience", -1, config.height / 8, config.getItemFillCollor);
+		loadItems(svg, graphContainer, data.study, "study", 1, config.height / 8, config.getItemFillCollor);
 	}
 
 	var getPath = function (diameter, position)
@@ -98,20 +87,6 @@ var d3Resume = function(_config){
 		var radius = diameter/2;
 		var height = position * (100 + radius * 0.7);
 		return "M0,0 q "+radius+" "+height+" "+diameter+" 0 z";
-	}
-
-	var sha1Hash = function (str) {
-	    return CryptoJS.SHA1(str).toString(CryptoJS.enc.Hex);
-	}
-
-	var hex = function (x, n) {
-	    var leadingZeroes = Array(n).join('0');
-	    return (leadingZeroes + x.toString(16)).substr(-n);
-	}
-
-	var getFill = function (name) {
-		var hex6 = hex(sha1Hash(name), 6);
-		return '#' + hex6.split("").reverse().join("");
 	}
 
 	var normalize = function (data)
@@ -148,7 +123,6 @@ var d3Resume = function(_config){
 
 	var addItemDetail = function (wrapper, size, position, weight, text){
 		wrapper.append('text')
-					.style("fill", "white")
 					.attr("font-size",size)
 					.style("font-weight", weight)
 					.text(text)
@@ -156,7 +130,7 @@ var d3Resume = function(_config){
 	}
 
 
-	var loadItems = function (svg, graphContainer, data, className, position, infoTopPosition)
+	var loadItems = function (svg, graphContainer, data, className, position, infoTopPosition, getItemFillCollor)
 	{
 
 		var gInfo = svg
@@ -186,19 +160,19 @@ var d3Resume = function(_config){
 															});
 
 		var descriptionWrapper = gInfo.selectAll('text.description')
-				.data(function(d, i) { 
-					var position = 70; 
+				.data(function(d, i) {
+					var position = 70;
 					return d.description.split("\n").map(function(i){
 						position += 20;
 						return {
 							text:i,
 							position:position
 						};
-					}); 
+					});
 				})
 				.enter();
 
-		addItemDetail(descriptionWrapper, "14px", function(d) {return "translate(0,"+d.position+")";}, 
+		addItemDetail(descriptionWrapper, "14px", function(d) {return "translate(0,"+d.position+")";},
 			"normal",function(d){return d.text;});
 
 
@@ -209,20 +183,18 @@ var d3Resume = function(_config){
 				.append("path")
 				.classed(className,true)
 				.classed('item',true)
-		        .attr("fill", function (d){return getFill(d.title)})
-		        .attr("fill-opacity", 0.6)
-		        .attr("stroke", "#FFFFFF")
-		        .attr("stroke-width", "2")	
+		        .attr("fill", function (d){return getItemFillCollor(d)})
+		        .attr("fill-opacity", .6)
 		        .attr("d",function(d){ return getPath(d.diameter, position); })
 		        .attr("transform", function(d) {
 					return "translate(" + [x(d.from),  0] + ")";
 				})
 				.on('mouseover', function(d){
 					graphContainer.selectAll("path.item").transition()
-							.attr("stroke-width", "1")	
-		                	.attr("fill-opacity", 0);
+							.attr("stroke-width", "1")
+		                	.attr("fill-opacity", .2);
 					d3.select(this).transition()
-							.attr("stroke-width", "2")	
+							.attr("stroke-width", "2")
 		                	.attr("fill-opacity", 1);
 	                showInfo(svg, className, d);
 	            })
@@ -232,7 +204,7 @@ var d3Resume = function(_config){
 						.transition()
 						.attr("stroke-width", "2")
 	                	.attr("fill-opacity", 0.5);
-	                lastTimeout = setTimeout(hideInfo,3000);     
+	                lastTimeout = setTimeout(hideInfo,3000);
 	            });
 	}
 
@@ -244,7 +216,7 @@ var d3Resume = function(_config){
 
 	var showInfo = function (svg, className, d)
 	{
-		if (lastTimeout) 
+		if (lastTimeout)
 		{
 			clearTimeout(lastTimeout);
 			lastTimeout = null;

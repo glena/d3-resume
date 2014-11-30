@@ -5,7 +5,7 @@ D3.js based resume visualizer
 
 Demo
 ----
-http://glena.github.io/#experience
+http://germanlena.com.ar/experience
 
 
 How to
@@ -27,9 +27,15 @@ var resume = new d3Resume({
   width: 900,
   height: 900,
   wrapperSelector: "article.resume",
-  dataUrl: 'data.json'
+  dataUrl: 'data.json',
+  getItemFillCollor: function (item) {
+    return '#' + (function co(lor){   return (lor +=
+      [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'][Math.floor(Math.random()*16)])
+      && (lor.length == 6) ?  lor : co(lor); })('');
+  }
 });
 ```
+*getItemFillCollor* is a callback invoked to get the item color. It receives the experience or education item by param.
 
 Data source
 -----------
