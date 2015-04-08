@@ -91,6 +91,6 @@ Notes:
 - type: is the text shown on the first line.
 - to: if this attribute is null, it will count as an ongoing job/study and will be shown as an unfinished one.
 - description: when a "\n" is found will generate a new line (because SVG does not support text wrapping at the moment).
-- default_item: if this attribute is null, it will be the default text when there is no item selected.
+- default_item: if this attribute is true, it will be the default text when there is no item selected.
 
 [![Analytics](https://ga-beacon.appspot.com/UA-51467836-1/glena/d3-resume)](http://germanlena.com.ar)
